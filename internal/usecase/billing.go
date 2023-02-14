@@ -19,7 +19,7 @@ func NewBillingUseCase(br BillingRepo) *BillingUseCase {
 
 // MakePurchase -.
 func (uc *BillingUseCase) MakePurchase(ctx context.Context, request dto.MakePurchaseRequest) error {
-	return nil
+
 }
 
 // GetBalance -

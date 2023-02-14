@@ -48,6 +48,21 @@ func (r *Repo) CheckUserExists(ctx context.Context, email string) (*entity.User,
 	return &user, nil
 }
 
-func (r *Repo) GetBalance(ctx context.Context, userID uuid.UUID) {
+func (r *Repo) GetWallet(ctx context.Context, userID uuid.UUID) (uuid.UUID, int64, error) {
+	var walletID uuid.UUID
+	var amount int64
 
+	tx, err := r.Pool.BeginTx(ctx, pgx.TxOptions{})
+	if err != nil {
+		return uuid.UUID{}, 0, err
+	}
+	rows, err := tx.Query(ctx, GetWalletByUserID, userID)
+
+	for rows.Next() {
+		err := rows.Scan(&walletID, &amount)
+		if err != nil {
+			return uuid.UUID{}, 0, err
+		}
+	}
+	return walletID, amount, err
 }

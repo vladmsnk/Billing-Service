@@ -22,7 +22,6 @@ func newBillingRoutes(api *gin.RouterGroup, t usecase.Billing, l logger.Interfac
 		secured.POST("/activity", r.makePurchase)
 		secured.GET("/balance", r.getBalance)
 	}
-
 }
 
 func (r *BillingRoutes) makePurchase(c *gin.Context) {
